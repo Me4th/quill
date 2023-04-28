@@ -7,6 +7,7 @@ class History extends Module {
   constructor(quill, options) {
     super(quill, options);
     this.lastRecorded = 0;
+    this.latestChange = {};
     this.ignoreChange = false;
     this.clear();
     this.quill.on(Quill.events.EDITOR_CHANGE, (eventName, delta, oldDelta, source) => {
@@ -29,6 +30,7 @@ class History extends Module {
     let delta = this.stack[source].pop();
     this.stack[dest].push(delta);
     this.lastRecorded = 0;
+    this.latestChange = {};
     this.ignoreChange = true;
     this.quill.updateContents(delta[source], Quill.sources.USER);
     this.ignoreChange = false;
@@ -53,7 +55,9 @@ class History extends Module {
       let delta = this.stack.undo.pop();
       undoDelta = undoDelta.compose(delta.undo);
       changeDelta = delta.redo.compose(changeDelta);
+      this.latestChange = delta.redo.compose(changeDelta);
     } else {
+      this.quill.emitter.emit('historyChange', this.latestChange);
       this.lastRecorded = timestamp;
     }
     this.stack.undo.push({

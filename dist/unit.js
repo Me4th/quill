@@ -7374,8 +7374,8 @@ var History = function (_Module) {
       if (this.lastRecorded + this.options.delay > timestamp && this.stack.undo.length > 0) {
         var delta = this.stack.undo.pop();
         undoDelta = undoDelta.compose(delta.undo);
-        changeDelta = delta.redo.compose(changeDelta);
         this.latestChange = delta.redo.compose(changeDelta);
+        changeDelta = delta.redo.compose(changeDelta);
       } else {
         this.lastRecorded = timestamp;
         this.quill.emitter.emit('historyChange', this.latestChange);

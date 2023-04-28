@@ -7377,8 +7377,8 @@ var History = function (_Module) {
         changeDelta = delta.redo.compose(changeDelta);
         this.latestChange = delta.redo.compose(changeDelta);
       } else {
-        this.quill.emitter.emit('historyChange', this.latestChange);
         this.lastRecorded = timestamp;
+        this.quill.emitter.emit('historyChange', this.latestChange);
       }
       this.stack.undo.push({
         redo: changeDelta,

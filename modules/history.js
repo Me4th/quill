@@ -33,6 +33,7 @@ class History extends Module {
     this.latestChange = {};
     this.ignoreChange = true;
     this.quill.updateContents(delta[source], Quill.sources.USER);
+    this.quill.emitter.emit('historyChange', delta[source]);
     this.ignoreChange = false;
     let index = getLastChangeIndex(delta[source]);
     this.quill.setSelection(index);

@@ -7350,6 +7350,7 @@ var History = function (_Module) {
       this.latestChange = {};
       this.ignoreChange = true;
       this.quill.updateContents(delta[source], _quill2.default.sources.USER);
+      this.quill.emitter.emit('historyChange', delta[source]);
       this.ignoreChange = false;
       var index = getLastChangeIndex(delta[source]);
       this.quill.setSelection(index);

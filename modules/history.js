@@ -33,7 +33,7 @@ class History extends Module {
     this.latestChange = {};
     this.ignoreChange = true;
     this.quill.updateContents(delta[source], Quill.sources.USER);
-    this.quill.emitter.emit('historyChange', delta[source]);
+    this.quill.emitter.emit('historyChange', { delta: delta[source], type: source });
     this.ignoreChange = false;
     let index = getLastChangeIndex(delta[source]);
     this.quill.setSelection(index);
@@ -59,7 +59,7 @@ class History extends Module {
       changeDelta = delta.redo.compose(changeDelta);
     } else {
       this.lastRecorded = timestamp;
-      this.quill.emitter.emit('historyChange', this.latestChange);
+      this.quill.emitter.emit('historyChange', { delta: this.latestChange, type: 'change' });
     }
     this.stack.undo.push({
       redo: changeDelta,

@@ -6971,7 +6971,7 @@ var History = function (_Module) {
       this.lastRecorded = 0;
       this.latestChange = {};
       this.ignoreChange = true;
-      this.quill.updateContents(delta[source], _quill2.default.sources.USER);
+      this.quill.updateContents(delta[source], 'history');
       this.quill.emitter.emit('historyChange', { delta: delta[source], type: source });
       this.ignoreChange = false;
       var index = getLastChangeIndex(delta[source]);
